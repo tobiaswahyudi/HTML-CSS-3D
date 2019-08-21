@@ -1,0 +1,69 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.scene {
+    width: 100%;
+    height: 100%;
+    perspective: 70vh;
+    overflow: hidden;
+}
+
+.square {
+    position: absolute;
+    text-align:center;
+    line-height:30em;
+    font-size: 3em;
+    color:#FFF;
+}
+
+.square.backwall {
+    width:40em;
+    height:30em;
+    transform: translate3d(calc( 50vw - 20em), calc( 50vh - 15em), 0em);
+    background-color: rgb(136, 135, 135);
+}
+
+.square.floor {
+    width:40em;
+    height:30em;
+    transform: translate3d(calc( 50vw - 20em), 50vh, 15em) rotateX(90deg);
+    background-color: rgb(206, 206, 206);
+}
+
+.square.roof {
+    width:40em;
+    height:30em;
+    transform: translate3d(calc( 50vw - 20em), calc(50vh - 30em), 15em) rotateX(-90deg);
+    background-color: rgb(90, 90, 90);
+}
+
+.square.leftwall {
+    width:30em;
+    height:30em;
+    transform: translate3d(calc( 50vw - 35em), calc( 50vh - 15em), 15em) rotateY(90deg);
+    background-color: rgb(160, 158, 158);
+}
+
+.square.rightwall {
+    width:30em;
+    height:30em;
+    transform: translate3d(calc( 50vw + 5em), calc( 50vh - 15em), 15em) rotateY(-90deg);
+    background-color: rgb(160, 158, 158);
+}
+
+.room {
+    transform-style: preserve-3d;
+    animation: y-axis-animation 1s ease-in-out 0s infinite alternate;
+}
+
+@keyframes y-axis-animation {
+    from {
+        transform: rotateY(20deg);
+    } to {
+        transform: rotateY(-20deg);
+    }
+  }
