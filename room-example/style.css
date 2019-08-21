@@ -1,3 +1,8 @@
+:root{
+    --width: 160em;
+    --height: 60em;
+}
+
 body{
     width: 100vw;
     height: 100vh;
@@ -8,62 +13,83 @@ body{
 .scene {
     width: 100%;
     height: 100%;
-    perspective: 70vh;
+    perspective: calc(0.5 * (var(--height) + var(--width)));
     overflow: hidden;
 }
 
 .square {
     position: absolute;
     text-align:center;
-    line-height:30em;
-    font-size: 0.5em;
+    line-height: var(--height);
+    /* for some reason, font-size controls perspective/zoom too */
+    font-size: 0.3em;
     color:#FFF;
 }
 
 .square.backwall {
-    width:40em;
-    height:30em;
-    transform: translate3d(calc( 50vw - 20em), calc( 50vh - 15em), 0em);
+    width:var(--width);
+    height:var(--height);
+    transform: translate3d(
+        calc( 50vw - (0.5 * var(--width))), 
+        calc( 50vh - (0.5 * var(--height))), 
+        0em
+    );
     background-color: rgb(136, 135, 135);
 }
 
 .square.floor {
-    width:40em;
-    height:30em;
-    transform: translate3d(calc( 50vw - 20em), 50vh, 15em) rotateX(90deg);
+    width:var(--width);
+    height:var(--height);
+    transform: translate3d(
+        calc( 50vw - (0.5 * var(--width))), 
+        50vh, 
+        calc(0.5 * var(--height))
+    ) rotateX(90deg);
     background-color: rgb(206, 206, 206);
 }
 
 .square.roof {
-    width:40em;
-    height:30em;
-    transform: translate3d(calc( 50vw - 20em), calc(50vh - 30em), 15em) rotateX(-90deg);
+    width:var(--width);
+    height:var(--height);
+    transform: translate3d(
+        calc( 50vw - (0.5 * var(--width))), 
+        calc(50vh - var(--height)), 
+        calc(0.5 * var(--height))
+    ) rotateX(-90deg);
     background-color: rgb(90, 90, 90);
 }
 
 .square.leftwall {
-    width:30em;
-    height:30em;
-    transform: translate3d(calc( 50vw - 35em), calc( 50vh - 15em), 15em) rotateY(90deg);
+    width:var(--height);
+    height:var(--height);
+    transform: translate3d(
+        calc( 50vw - (0.5 * var(--height)) - (0.5 * var(--width))), 
+        calc( 50vh - (0.5 * var(--height))), 
+        calc(0.5 * var(--height))
+    ) rotateY(90deg);
     background-color: rgb(160, 158, 158);
 }
 
 .square.rightwall {
-    width:30em;
-    height:30em;
-    transform: translate3d(calc( 50vw + 5em), calc( 50vh - 15em), 15em) rotateY(-90deg);
+    width:var(--height);
+    height:var(--height);
+    transform: translate3d(
+        calc( 50vw - (0.5 * var(--height)) + (0.5 * var(--width))), 
+        calc( 50vh - (0.5 * var(--height))), 
+        calc(0.5 * var(--height))
+    ) rotateY(-90deg);
     background-color: rgb(160, 158, 158);
 }
 
 .room {
     transform-style: preserve-3d;
-    animation: y-axis-animation 1s ease-in-out 0s infinite alternate;
+    animation: y-axis-animation 3s ease-in-out 0s infinite alternate;
 }
 
 @keyframes y-axis-animation {
     from {
-        transform: rotateY(20deg);
+        transform: translate3d(15em, 0, 0);
     } to {
-        transform: rotateY(-20deg);
+        transform: translate3d(-15em, 0, 0);
     }
   }
