@@ -1,29 +1,27 @@
-import React from 'react'
-import Link from 'next/link'
-import Head from '../components/head'
-import Nav from '../components/nav'
+import React from "react"
+import Link from "next/link"
+import Head from "../components/head"
+import Nav from "../components/nav"
+import "../static/style.css"
 
 class App extends React.Component {
   render(){
     return (
       <div>
-          <head>
-              <title>
-                  3D With HTML/CSS
-              </title>
-              <link rel="stylesheet" href="../static/style.css"/>
-          </head>
-          <body width="100vw" height="100vh">
-              <div class="scene">
-                  <div class="room">
-                      <div class="square backwall">back wall</div>
-                      <div class="square floor">floor</div>
-                      <div class="square roof">roof</div>
-                      <div class="square leftwall">left</div>
-                      <div class="square rightwall">right</div>
-                  </div>
-              </div>
-          </body>
+        <Head title="3D With HTML/CSS" >
+        </Head>
+        <div className="screen">
+          <div className="scene">
+            <Room>
+              <Plane pos={[0,0,-30]} piv={[0,0,0]} rot={[0,0,0]} dim={[150,60]} color="#888888"/>
+              <Plane pos={[0,0,-75]} piv={[0,0,0]} rot={[0,90,0]} dim={[60,60]} color="#999999"/>
+              <Plane pos={[0,0,-75]} piv={[0,0,0]} rot={[0,-90,0]} dim={[60,60]} color="#999999"/>
+              <Plane pos={[0,0,-30]} piv={[0,0,0]} rot={[90,0,0]} dim={[150,60]} color="#CCCCCC"/>
+              <Plane pos={[0,0,-30]} piv={[0,0,0]} rot={[-90,0,0]} dim={[150,60]} color="#555555"/>
+              <Plane pos={[0,0,-30]} piv={[0,0,0]} rot={[-90,0,0]} dim={[150,60]} color="#555555"/>
+            </Room>
+          </div>
+        </div>
       </div>
     )
   }
@@ -35,37 +33,39 @@ class App extends React.Component {
 class Plane extends React.Component {
   render(){
     return (
-      <div className="rotationOrigin" style={
+      <div className="pivot" style={
         {
-          position: 'absolute',
-          transform: {
-            translateX: this.props.cx,
-            translateY: this.props.cy,
-            translateZ: this.props.cz,
-            rotateX: this.props.rx,
-            rotateY: this.props.ry,
-            rotateZ: this.props.rz
-          }
+          position: "absolute",
+          transformStyle: "preserve-3d",
+          transform: 
+            "translate3d("+this.props.piv[0]+"em, "+this.props.piv[1]+"em ,"+this.props.piv[2]+"em) "+
+            "rotateX("+this.props.rot[0]+"deg) "+
+            "rotateY("+this.props.rot[1]+"deg) "+
+            "rotateZ( "+this.props.rot[2]+"deg)"
         }
         }>
-        <div className="rotationOffset" style={
+        <div class="square" style={
           {
-            position: 'absolute',
-            transform: {
-              translateX: (this.props.x - this.props.cx),
-              translateY: (this.props.y - this.props.cy),
-              translateZ: (this.props.z - this.props.cz)
-            }
+            position: "absolute",
+            backgroundColor: this.props.color,
+            width: this.props.dim[0]+"em",
+            height: this.props.dim[1]+"em",
+            transform: "translate3d("+
+              (this.props.pos[0] - this.props.piv[0] - (0.5 * this.props.dim[0]))+"em, "+
+              (this.props.pos[1] - this.props.piv[1] - (0.5 * this.props.dim[1]))+"em ,"+
+              (this.props.pos[2] - this.props.piv[2])+"em )"
           }
-        }>
-          <div class="square" style={
-            {
-              backgroundColor: this.props.color,
-              width: this.props.width,
-              height: this.props.height
-            }
-          }>{this.props.text}</div>
-        </div>
+        }>{this.props.text}</div>
+      </div>
+    )
+  }
+}
+
+class Room extends React.Component {
+  render(){
+    return(
+      <div className="room">
+        {this.props.children}
       </div>
     )
   }

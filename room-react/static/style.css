@@ -1,5 +1,5 @@
 :root{
-    --width: 160em;
+    --width: 80em;
     --height: 60em;
 }
 
@@ -10,10 +10,30 @@ body{
     margin: 0;
 }
 
+div{
+    width: 100%;
+    height:100%;
+}
+
+.pivot{
+    width: 0;
+    height: 0;
+}
+
 .scene {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    width: 0%;
+    height: 0%;
+    perspective: calc(0.5 * (var(--height) + var(--width)));
+    overflow: visible;
+}
+
+.screen {
+    position: relative;
     width: 100%;
     height: 100%;
-    perspective: calc(0.5 * (var(--height) + var(--width)));
     overflow: hidden;
 }
 
@@ -25,7 +45,7 @@ body{
     font-size: 0.3em;
     color:#FFF;
 }
-
+/* 
 .square.backwall {
     width:var(--width);
     height:var(--height);
@@ -41,7 +61,7 @@ body{
     width:var(--width);
     height:var(--height);
     transform: translate3d(
-        calc( 50vw - (0.5 * var(--width))), 
+        0em, 
         50vh, 
         calc(0.5 * var(--height))
     ) rotateX(90deg);
@@ -79,17 +99,44 @@ body{
         calc(0.5 * var(--height))
     ) rotateY(-90deg);
     background-color: rgb(160, 158, 158);
-}
+} */
 
 .room {
+    position: relative;
     transform-style: preserve-3d;
-    animation: y-axis-animation 3s ease-in-out 0s infinite alternate;
+    width: 0;
+    height: 0;
+    transition: transform 1s ease-in-out;
+    transform: translate3d(15em, 0, 0);
+    /* animation: slide-left 1s ease-in-out 0s forwards; */
 }
 
-@keyframes y-axis-animation {
-    from {
+.screen:active .room{
+    transform: translate3d(-15em, 0, 0);
+    /* animation: slide-right 1s ease-in-out 0s forwards; */
+}
+
+@keyframes slide-left {
+    0% {
         transform: translate3d(15em, 0, 0);
-    } to {
+    }
+    90%{
+        transform: translate3d(-16em, 0, 0);
+    }
+    100% {
         transform: translate3d(-15em, 0, 0);
+    }
+  }
+
+
+@keyframes slide-right {
+    0% {
+        transform: translate3d(-15em, 0, 0);
+    }
+    90%{
+        transform: translate3d(16em, 0, 0);
+    }
+    100% {
+        transform: translate3d(15em, 0, 0);
     }
   }
