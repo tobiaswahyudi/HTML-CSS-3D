@@ -44,7 +44,7 @@ class Plane extends React.Component {
             "rotateZ( "+this.props.rot[2]+"deg)"
         }
         }>
-        <div class="square" style={
+        <div className="square" style={
           {
             position: "absolute",
             backgroundColor: this.props.color,
